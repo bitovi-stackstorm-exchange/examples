@@ -18,7 +18,8 @@ tasks:
         do: finish
       - when: <% failed() and ctx().retries < ctx().max_retries %>
         publish:
-          - retries: <% ctx().retries + 1 %>
+          # - retries: <% ctx().retries + 1 %>
+          - retries: 3
         do: retry
       - when: <% failed() and ctx().retries >= ctx().max_retries %>
         do: stop
