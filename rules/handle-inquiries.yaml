@@ -1,0 +1,12 @@
+---
+name: notify-inquiries
+description: Notify inquiries
+enabled: true
+
+trigger:
+  type: core.st2.generic.inquiry
+
+action:
+  ref: examples.notify-inquiries
+  parameters:
+    inquiry_data: "{{ trigger }}"

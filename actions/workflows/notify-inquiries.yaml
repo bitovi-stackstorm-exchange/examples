@@ -1,0 +1,25 @@
+version: 1.0
+
+description: Receiver for inquiry trigger data
+
+input:
+  - inquiry_data
+
+vars:
+  - inquiry_type
+
+tasks:
+  switch:
+    action: core.noop
+    next:
+      - when: <% succeeded() and ctx().inquiry_data %>
+        do: output_inquiry_data
+      - when: <% succeeded() and not ctx().inquiry_data %>
+        do: output_inquiry_data_not_found
+
+
+  output_inquiry_data:
+    action: core.echo message=<% ctx().inquiry_data %>
+
+  output_inquiry_data_not_found:
+    action: core.echo message="Inquiry type not found"

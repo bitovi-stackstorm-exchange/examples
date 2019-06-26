@@ -1,0 +1,10 @@
+---
+name: notify-inquiries
+description: Receiver for inquiry trigger data
+runner_type: orquesta
+entry_point: workflows/notify-inquiries.yaml
+enabled: true
+parameters:
+  inquiry_data:
+    required: true
+    type: object
