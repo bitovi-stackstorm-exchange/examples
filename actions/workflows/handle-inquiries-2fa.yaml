@@ -1,0 +1,30 @@
+version: 1.0
+
+description: Receiver for 2FA inquiries 
+
+input:
+  - inquiry_data
+
+tasks:
+  
+  fetch_secret_key:
+    action: mock-vault.get-secret
+    input:
+      secret_name: <% ctx().inquiry_data.route %>
+    next:
+      - when: <% succeeded() %>
+        do: fetch_secret
+
+  fetch_secret:
+    action: kv.get_object
+    input:
+      key: <% task(fetch_secret_key).result.kv_name %>
+    next:
+      - when: <% succeeded() %>
+        do: respond
+
+  respond:
+    action: core.local
+    input:
+      cmd: "st2 inquiry respond -r '{\"token\": \"<% task(fetch_secret).result.kv_name \"}' <% ctx().inquiry_data.id %>"
+

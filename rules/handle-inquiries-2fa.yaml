@@ -1,0 +1,17 @@
+---
+name: handle-inquiries-2fa
+description: Notify inquiries
+enabled: true
+
+trigger:
+  type: core.st2.generic.inquiry
+
+criteria:
+    trigger.route:
+        type: "iequals"
+        pattern : "2fa"
+        
+action:
+  ref: examples.handle-inquiries-2fa
+  parameters:
+    inquiry_data: "{{ trigger }}"

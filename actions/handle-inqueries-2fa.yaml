@@ -1,0 +1,10 @@
+---
+name: handle-inquiries-2fa
+description: Receiver for 2fa inquiries
+runner_type: orquesta
+entry_point: workflows/handle-inquiries-2fa.yaml
+enabled: true
+parameters:
+  inquiry_data:
+    required: true
+    type: object
