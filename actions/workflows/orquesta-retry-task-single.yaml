@@ -35,7 +35,7 @@ tasks:
   finish:
     action: core.echo message="Retry succeeded"
 
-  stop:
-    action: core.echo message="Exceeded retries"
-    next:
-      - do: fail
+  # stop:
+  #   action: core.echo message="Exceeded retries"
+  #   next:
+  #     - do: fail
