@@ -7,7 +7,7 @@ input:
 
 tasks:
   start:
-    action: core.echo message="2fa started %>"
+    action: core.echo message="2fa started"
     next:
       - when: <% succeeded() %>
         do: get_approval
