@@ -12,19 +12,18 @@ vars:
 tasks:
   call_action:
     action: <% ctx().action %>
-    # action: examples.orquesta-ask-2fa-nested
     next:
       - when: <% succeeded() %>
         do: finish
-      - when: <% failed() %>
+      # - when: <% failed() %>
+      #   do: try_again
+      - when: <% failed() and ctx().retries < ctx().max_retries %>
+        publish:
+          # - retries: <% ctx().retries + 1 %>
+          - retries: 3
         do: try_again
-      # - when: <% failed() and ctx().retries < ctx().max_retries %>
-      #   publish:
-      #     # - retries: <% ctx().retries + 1 %>
-      #     - retries: 3
-      #   do: retry
-      # - when: <% failed() and ctx().retries >= ctx().max_retries %>
-      #   do: stop
+      - when: <% failed() and ctx().retries >= ctx().max_retries %>
+        do: stop
 
   # try_again:
   #   action: core.noop
