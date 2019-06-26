@@ -1,6 +1,6 @@
 version: 1.0
 
-description: higher-level workflow that allows retries
+description: higher-level workflow that allows retries for a provided action
 
 input:
   - action
@@ -37,7 +37,7 @@ tasks:
   finish:
     action: core.echo message="Retry succeeded"
 
-  # stop:
-  #   action: core.echo message="Exceeded retries"
-  #   next:
-  #     - do: fail
+  stop:
+    action: core.echo message="Exceeded retries"
+    next:
+      - do: fail
