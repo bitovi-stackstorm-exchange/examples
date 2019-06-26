@@ -16,14 +16,7 @@ tasks:
     next:
       - when: <% succeeded() %>
         do: do_something_important
-      - when: <% failed() %>
-        do: unauthorized
 
   
   do_something_important:
     action: core.echo message="nested 2fa succeeded"
-
-  unauthorized:
-    action: core.echo message="unauthorized"
-    next:
-      - do: fail
