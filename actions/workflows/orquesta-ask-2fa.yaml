@@ -28,7 +28,7 @@ tasks:
       - when: <% succeeded() and not task(get_approval).result.cancel %>
         do: finish
       - when: <% succeeded() and task(get_approval).result.cancel %>
-        do: fail
+        do: cancel
       - when: <% failed() %>
         do: stop
 
@@ -37,6 +37,11 @@ tasks:
 
   stop:
     action: core.echo message="2fa stopped."
+    next:
+      - do: fail
+
+  cancel:
+    action: core.echo message="2fa cancelled."
     next:
       - do: fail
 
