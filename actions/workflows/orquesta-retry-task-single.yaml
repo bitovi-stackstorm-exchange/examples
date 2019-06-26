@@ -15,21 +15,20 @@ tasks:
     next:
       - when: <% succeeded() %>
         do: finish
-      # - when: <% failed() %>
-      #   do: try_again
-      - when: <% failed() and ctx().retries < ctx().max_retries %>
-        publish:
-          # - retries: <% ctx().retries + 1 %>
-          - retries: 3
+      - when: <% failed() %>
         do: try_again
-      - when: <% failed() and ctx().retries >= ctx().max_retries %>
-        do: stop
+
 
   try_again:
     action: core.noop
     next:
-      - when: <% succeeded() %>
+      - when: <% succeeded() and ctx().retries < ctx().max_retries %>
+        publish:
+          # - retries: <% ctx().retries + 1 %>
+          - retries: 3
         do: call_action
+      - when: <% succeeded() and ctx().retries >= ctx().max_retries %>
+        do: stop
 
   # try_again:
   #   action: core.echo message="try again"
