@@ -19,6 +19,7 @@ tasks:
             type: string
             description: "2FA Token"
             required: True
+            secret: True
     next:
       - when: <% succeeded() %>
         do: finish
@@ -26,7 +27,7 @@ tasks:
         do: stop
 
   finish:
-    action: core.echo message="Automation completed."
+    action: core.echo message="Automation completed. <% task(get_approval).result.response.token %>"
 
   stop:
     action: core.echo message="Automation stopped."
