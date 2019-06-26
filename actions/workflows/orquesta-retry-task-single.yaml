@@ -17,7 +17,7 @@ tasks:
       - when: <% succeeded() %>
         do: finish
       - when: <% failed() %>
-        do: retry
+        do: try_again
       # - when: <% failed() and ctx().retries < ctx().max_retries %>
       #   publish:
       #     # - retries: <% ctx().retries + 1 %>
@@ -26,7 +26,7 @@ tasks:
       # - when: <% failed() and ctx().retries >= ctx().max_retries %>
       #   do: stop
 
-  retry:
+  try_again:
     action: core.noop
     next:
       - when: <% succeeded() %>
