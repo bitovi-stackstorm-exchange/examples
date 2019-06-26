@@ -9,9 +9,9 @@ tasks:
   switch:
     action: core.noop
     next:
-      - when: <% succeeded() and ctx().inquiry_data.route == "2FA" %>
+      - when: <% succeeded() and ctx().inquiry_data.route = "2FA" %>
         do: notify_2fa
-      - when: <% succeeded() and ctx().inquiry_data.route == "other" %>
+      - when: <% succeeded() and ctx().inquiry_data.route = "other" %>
         do: notify_other
       - when: <% succeeded() and not ctx().inquiry_data.route %>
         do: notify_not_found
