@@ -8,7 +8,7 @@ input:
 tasks:
   
   fetch_secret_key:
-    action: mock-vault.get-secret
+    action: mockvault.get-secret
     input:
       secret_name: <% ctx().inquiry_data.route %>
     next:
