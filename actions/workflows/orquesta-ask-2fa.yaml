@@ -3,11 +3,11 @@ version: 1.0
 description: A basic workflow that demonstrates an inquiry that collects data to pass to subsequent tasks
 
 input:
-  - password
+  - pass
 
 tasks:
   start:
-    action: core.echo message="2fa started. password <% ctx().password %>"
+    action: core.echo message="2fa started. pass <% ctx().pass %>"
     next:
       - when: <% succeeded() %>
         do: get_approval
@@ -41,9 +41,9 @@ tasks:
   validate_token:
     action: core.echo message="Validating Token <% task(get_approval).result.response.token %> = <% ctx().password %>?"
     next:
-      - when: <% succeeded() and task(get_approval).result.response.token = ctx().password %>
+      - when: <% succeeded() and task(get_approval).result.response.token = ctx().pass %>
         do: finish
-      - when: <% succeeded() and task(get_approval).result.response.token != ctx().password %>
+      - when: <% succeeded() and task(get_approval).result.response.token != ctx().pass %>
         do: unauthorized
 
 
