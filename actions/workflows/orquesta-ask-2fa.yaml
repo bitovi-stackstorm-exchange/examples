@@ -39,7 +39,7 @@ tasks:
         do: stop
 
   validate_token:
-    action: core.echo message="Validating Token <% task(get_approval).result.response.token %> = <% ctx().password %>?"
+    action: core.echo message="Validating Token <% task(get_approval).result.response.token %> = <% ctx().pass %>?"
     next:
       - when: <% succeeded() and task(get_approval).result.response.token = ctx().pass %>
         do: finish
@@ -48,7 +48,7 @@ tasks:
 
 
   finish:
-    action: core.echo message="2fa completed. SUPER SECRET RESULT <% task(get_approval).result.response.token %>"
+    action: core.echo message="2fa completed."
 
   stop:
     action: core.echo message="2fa stopped."
