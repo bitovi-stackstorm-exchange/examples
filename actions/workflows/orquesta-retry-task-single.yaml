@@ -11,8 +11,8 @@ vars:
 
 tasks:
   call_action:
-    # action: <% ctx().action %>
-    action: examples.orquesta-ask-2fa-nested
+    action: <% ctx().action %>
+    # action: examples.orquesta-ask-2fa-nested
     next:
       - when: <% succeeded() %>
         do: finish
