@@ -26,11 +26,20 @@ tasks:
             description: "Cancel"
     next:
       - when: <% succeeded() and not task(get_approval).result.cancel %>
-        do: finish
+        do: validate_token
       - when: <% succeeded() and task(get_approval).result.cancel %>
         do: cancel
       - when: <% failed() %>
         do: stop
+
+  validate_token:
+    action: core.echo message="Validating Token"
+    next:
+      - when: <% succeeded() and task(get_approval).result.response.token = "1234" %>
+        do: finish
+      - when: <% succeeded() and task(get_approval).result.response.token != "1234" %>
+        do: unauthorized
+
 
   finish:
     action: core.echo message="2fa completed. SUPER SECRET RESULT <% task(get_approval).result.response.token %>"
@@ -42,6 +51,11 @@ tasks:
 
   cancel:
     action: core.echo message="2fa cancelled."
+    next:
+      - do: fail
+
+  unauthorized:
+    action: core.echo message="unauthorized"
     next:
       - do: fail
 
