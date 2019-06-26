@@ -17,7 +17,7 @@ tasks:
       - when: <% succeeded() %>
         do: finish
       - when: <% failed() %>
-        do: stop
+        do: retry
       # - when: <% failed() and ctx().retries < ctx().max_retries %>
       #   publish:
       #     # - retries: <% ctx().retries + 1 %>
@@ -26,11 +26,11 @@ tasks:
       # - when: <% failed() and ctx().retries >= ctx().max_retries %>
       #   do: stop
 
-  # retry:
-  #   action: core.noop
-  #   next:
-  #     - when: <% succeeded() %>
-  #       do: call_action
+  retry:
+    action: core.noop
+    next:
+      - when: <% succeeded() %>
+        do: call_action
 
   finish:
     action: core.echo message="Retry succeeded"
