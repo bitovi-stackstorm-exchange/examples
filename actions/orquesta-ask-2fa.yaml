@@ -9,6 +9,7 @@ parameters:
       type: "string"
       required: true
       description: "2fa response must match this value"
+      secret: true
 output_schema:
   token:
     type: "string"
