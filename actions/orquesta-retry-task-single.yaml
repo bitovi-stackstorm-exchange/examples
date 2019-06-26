@@ -1,0 +1,15 @@
+---
+name: orquesta-retry-task-single
+description: task retry pattern with single task
+runner_type: orquesta
+entry_point: workflows/orquesta-retry-task-single.yaml
+enabled: true
+parameters:
+  max_retries:
+    type: "number"
+    required: true
+    description: "how many times to retry the action"
+  action:
+    type: "string"
+    required: true
+    description: "the action to run (fully qualified)"

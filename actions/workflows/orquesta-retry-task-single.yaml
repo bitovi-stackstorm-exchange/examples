@@ -1,0 +1,31 @@
+version: 1.0
+
+description: higher-level workflow that allows retries
+
+input:
+  - action
+  - max_retries
+
+vars:
+  - retries: 0
+
+tasks:
+  retry:
+    action: <% ctx().action %>
+    next:
+      - when: <% succeeded() %>
+        do: finish
+      - when: <% failed() and ctx().retries < ctx().max_retries %>
+        publish:
+          - retries: <% ctx().retries + 1 %>
+        do: retry
+      - when: <% failed() and ctx().retries >= ctx().max_retries %>
+        do: stop
+
+  finish:
+    action: core.echo message="Retry succeeded"
+
+  stop:
+    action: core.echo message="Exceeded retries"
+    next:
+      - do: fail
