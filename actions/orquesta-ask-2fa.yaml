@@ -1,0 +1,6 @@
+---
+name: orquesta-ask-2fa
+description: A basic workflow that demonstrates an inquiry that collects data to pass to subsequent tasks
+runner_type: orquesta
+entry_point: workflows/orquesta-ask-2fa.yaml
+enabled: true

@@ -5,9 +5,6 @@ description: Receiver for inquiry trigger data
 input:
   - inquiry_data
 
-vars:
-  - inquiry_type
-
 tasks:
   switch:
     action: core.noop
