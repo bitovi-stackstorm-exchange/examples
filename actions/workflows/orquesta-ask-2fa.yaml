@@ -28,7 +28,7 @@ tasks:
         do: stop
 
   finish:
-    action: core.echo message="Automation completed. SUPER SECRET RESULT (<% task(get_approval).result.response.token %>)"
+    action: core.echo message="Automation completed. SUPER SECRET RESULT <% task(get_approval).result.response.token %>"
 
   stop:
     action: core.echo message="Automation stopped."
@@ -36,4 +36,4 @@ tasks:
       - do: fail
 
 output:
-  token: <% task(get_approval).result.response.token %>
+  token: "<% task(get_approval).result.response.token %>"
