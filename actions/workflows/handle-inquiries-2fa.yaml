@@ -16,7 +16,7 @@ tasks:
         do: fetch_secret
 
   fetch_secret:
-    action: kv.get_object
+    action: st2.kv.get
     input:
       key: <% task(fetch_secret_key).result.kv_name %>
     next:
@@ -26,5 +26,5 @@ tasks:
   respond:
     action: core.local
     input:
-      cmd: "st2 inquiry respond -r '{\"token\": \"<% task(fetch_secret).result.kv_name \"}' <% ctx().inquiry_data.id %>"
+      cmd: "st2 inquiry respond -r '{\"token\": \"<% task(fetch_secret).stdout \"}' <% ctx().inquiry_data.id %>"
 
