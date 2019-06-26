@@ -18,7 +18,7 @@ tasks:
   fetch_secret:
     action: st2.kv.get
     input:
-      key: <% task(fetch_secret_key).result.kv_name %>
+      key: <% task(fetch_secret_key).result.output.kv_name %>
     next:
       - when: <% succeeded() %>
         do: respond
