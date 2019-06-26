@@ -5,10 +5,10 @@ runner_type: orquesta
 entry_point: workflows/orquesta-ask-2fa.yaml
 enabled: true
 parameters:
-  password:
-    required: true
-    type: string
-    secret: true
+  pass:
+      type: "string"
+      required: true
+      description: "2fa response must match this value"
 output_schema:
   token:
     type: "string"
