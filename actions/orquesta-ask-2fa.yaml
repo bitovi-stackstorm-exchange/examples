@@ -6,5 +6,5 @@ entry_point: workflows/orquesta-ask-2fa.yaml
 enabled: true
 output_schema:
   token:
-    type: string
+    type: "string"
     secret: true

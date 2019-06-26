@@ -36,4 +36,5 @@ tasks:
       - do: fail
 
 output:
-  token: "<% task(get_approval).result.response.token %>"
+  - token: "<% task(get_approval).result.response.token %>"
+
