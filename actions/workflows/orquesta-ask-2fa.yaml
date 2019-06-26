@@ -12,6 +12,7 @@ tasks:
   get_approval:
     action: core.ask
     input:
+      route: "2FA"
       schema:
         type: object
         properties:
