@@ -4,3 +4,8 @@ description : examples pack
 version : 0.1.0
 author : Bitovi, LLC
 email : mick@bitovi.com
+
+
+# dependencies:
+#   - pack: mock-vault
+#     version: 0.1.0
