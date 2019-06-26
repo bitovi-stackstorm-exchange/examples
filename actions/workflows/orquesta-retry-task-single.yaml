@@ -1,3 +1,5 @@
+## this action just hangs
+
 version: 1.0
 
 description: higher-level workflow that allows retries for a provided action
@@ -15,20 +17,21 @@ tasks:
     next:
       - when: <% succeeded() %>
         do: finish
-      - when: <% failed() %>
+      # - when: <% failed() %>
+      #   do: try_again
+      - when: <% failed() and ctx().retries < ctx().max_retries %>
+        publish:
+          # - retries: <% ctx().retries + 1 %>
+          - retries: 3
         do: try_again
-
+      - when: <% failed() and ctx().retries >= ctx().max_retries %>
+        do: stop
 
   try_again:
     action: core.noop
     next:
-      - when: <% succeeded() and ctx().retries < ctx().max_retries %>
-        publish:
-          # - retries: <% ctx().retries + 1 %>
-          - retries: 3
+      - when: <% succeeded() %>
         do: call_action
-      - when: <% succeeded() and ctx().retries >= ctx().max_retries %>
-        do: stop
 
   # try_again:
   #   action: core.echo message="try again"
