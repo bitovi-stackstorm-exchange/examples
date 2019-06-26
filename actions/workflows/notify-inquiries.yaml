@@ -16,7 +16,7 @@ tasks:
 
 
   output_inquiry_data:
-    action: core.echo message=<% ctx().inquiry_data %>
+    action: core.echo message="<% ctx().inquiry_data %>"
 
   output_inquiry_data_not_found:
     action: core.echo message="Inquiry type not found"
