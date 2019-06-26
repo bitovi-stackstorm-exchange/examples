@@ -12,7 +12,7 @@ tasks:
   check_password:
     action: examples.orquesta-ask-2fa
     input:
-      password: "1234"
+      pass: "1234"
     next:
       - when: <% succeeded() %>
         do: do_something_important
@@ -21,7 +21,7 @@ tasks:
 
   
   do_something_important:
-    action: core.echo message="2fa succeeded"
+    action: core.echo message="nested 2fa succeeded"
 
   unauthorized:
     action: core.echo message="unauthorized"
