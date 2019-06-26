@@ -26,11 +26,14 @@ tasks:
       # - when: <% failed() and ctx().retries >= ctx().max_retries %>
       #   do: stop
 
+  # try_again:
+  #   action: core.noop
+  #   next:
+  #     - when: <% succeeded() %>
+  #       do: call_action
+
   try_again:
-    action: core.noop
-    next:
-      - when: <% succeeded() %>
-        do: call_action
+    action: core.echo message="try again"
 
   finish:
     action: core.echo message="Retry succeeded"
