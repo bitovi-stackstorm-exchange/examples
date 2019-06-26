@@ -25,9 +25,9 @@ tasks:
             type: boolean
             description: "Cancel"
     next:
-      - when: <% succeeded() and not task(get_approval).result.cancel %>
+      - when: <% succeeded() and not task(get_approval).result.containsKey("cancel") %>
         do: validate_token
-      - when: <% succeeded() and task(get_approval).result.cancel %>
+      - when: <% succeeded() and task(get_approval).result.containsKey("cancel") %>
         do: cancel
       - when: <% failed() %>
         do: stop
