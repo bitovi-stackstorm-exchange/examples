@@ -26,5 +26,5 @@ tasks:
   respond:
     action: core.local
     input:
-      cmd: "st2 inquiry respond -r '{\"token\": \"<% task(fetch_secret).stdout \"}' <% ctx().inquiry_data.id %>"
+      cmd: "st2 inquiry respond -r '{\"token\": \"<% task(fetch_secret).stdout %>\"}' <% ctx().inquiry_data.id %>"
 
