@@ -29,9 +29,6 @@ tasks:
             description: "Cancel"
     next:
       - when: <% succeeded() and not task(get_approval).result.containsKey("cancel") %>
-        publish:
-          - validate_result: <% result() %>
-          - context: <% ctx() %>
         do: validate_token
       - when: <% succeeded() and task(get_approval).result.containsKey("cancel") %>
         do: cancel
