@@ -7,7 +7,7 @@ input:
 
 tasks:
   start:
-    action: core.echo message="2fa started. pass <% ctx().pass %>"
+    action: core.echo message="2fa started %>"
     next:
       - when: <% succeeded() %>
         do: get_approval
@@ -36,7 +36,7 @@ tasks:
         do: stop
 
   validate_token:
-    action: core.echo message="Validating Token <% task(get_approval).result.response.token %> = <% ctx().pass %>?"
+    action: core.echo message="Validating Token..."
     next:
       - when: <% succeeded() and task(get_approval).result.response.token = ctx().pass %>
         do: finish
