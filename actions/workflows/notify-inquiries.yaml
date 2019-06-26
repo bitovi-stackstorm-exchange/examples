@@ -9,14 +9,18 @@ tasks:
   switch:
     action: core.noop
     next:
-      - when: <% succeeded() and ctx().inquiry_data %>
-        do: output_inquiry_data
-      - when: <% succeeded() and not ctx().inquiry_data %>
-        do: output_inquiry_data_not_found
+      - when: <% succeeded() and ctx().inquiry_data.route == "2FA" %>
+        do: notify_2fa
+      - when: <% succeeded() and ctx().inquiry_data.route == "other" %>
+        do: notify_other
+      - when: <% succeeded() and not ctx().inquiry_data.route %>
+        do: notify_not_found
 
 
-  output_inquiry_data:
-    action: core.echo message="<% ctx().inquiry_data %>"
+  notify_2fa:
+    action: core.echo message="2FA triggered"
+  notify_other:
+    action: core.echo message="Some other inquiry triggered"
 
-  output_inquiry_data_not_found:
+  notify_not_found:
     action: core.echo message="Inquiry type not found"
