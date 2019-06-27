@@ -10,7 +10,7 @@ tasks:
   fetch_secret_key:
     action: mockvault.get-secret
     input:
-      secret_name: <% ctx().inquiry_data.route %>
+      type: <% ctx().inquiry_data.route %>
     next:
       - when: <% succeeded() %>
         do: fetch_secret
