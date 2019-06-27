@@ -15,6 +15,17 @@ tasks:
       - when: <% succeeded() %>
         do: fetch_secret
 
+
+  # respond_with_secret:
+  #   action: examples.respond_with_secret
+  #   input:
+  #     key: "<% task(fetch_secret_key).result.output.kv_name %>"
+  #     inquiry_id: "<% ctx().inquiry_data.id %>"
+
+  # TODO: create a python action (above) for these two actions and put the api key in config
+  #   - get secret from kv store
+  #   - get api key from config
+  #   - call api with api key
   fetch_secret:
     action: st2.kv.get
     input:
@@ -23,7 +34,6 @@ tasks:
       - when: <% succeeded() %>
         do: respond
 
-  # TODO: create a python action for this and put the api key in config
   respond:
     action: core.local
     input:
