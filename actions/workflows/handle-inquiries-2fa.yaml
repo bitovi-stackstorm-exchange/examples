@@ -23,8 +23,10 @@ tasks:
       - when: <% succeeded() %>
         do: respond
 
+  # TODO: create a python action for this and put the api key in config
   respond:
     action: core.local
+    env: ST2_API_KEY="YjY1YWY4Mjg0ODkyNjQ5YzUzYmFiODgxYjRlYzUyNzZiZjY1OTgzMTIyOWM0ZjViMDQxODNmZDRiMDYwZWNiYQ"
     input:
       cmd: "st2 inquiry respond -r '{\"token\": \"<% task(fetch_secret).result.stdout %>\"}' <% ctx().inquiry_data.id %>"
 
