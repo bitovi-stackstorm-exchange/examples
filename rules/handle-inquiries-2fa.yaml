@@ -1,7 +1,7 @@
 ---
 name: handle-inquiries-2fa
 description: Notify inquiries
-enabled: false
+enabled: true
 
 trigger:
   type: core.st2.generic.inquiry
