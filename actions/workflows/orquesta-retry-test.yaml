@@ -4,15 +4,18 @@ version: 1.0
 
 description: retry
 
-tasks:
-  party:
-    action: core.noop
-    next:
-      - when: <% succeeded() %>
-        do: partb
+vars:
+  - loop: true
 
-  partb:
-    action: core.noop
-    next:
-      - when: <% succeeded() %>
-        do: party
+start:
+  action: core.noop
+  next:
+    - do: task1
+
+task1:
+  action: core.noop
+  next:
+    - when: '<% ctx("loop") = true %>'
+      publish:
+        - loop: False
+      do: task1
