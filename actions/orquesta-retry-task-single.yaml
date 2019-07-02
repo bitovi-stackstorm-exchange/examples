@@ -13,3 +13,6 @@ parameters:
     type: "string"
     required: true
     description: "the action to run (fully qualified)"
+  action_inputs:
+    type: "object"
+    description: "the action inputs"

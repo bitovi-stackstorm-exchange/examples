@@ -2,42 +2,58 @@
 
 version: 1.0
 
-description: higher-level workflow that allows retries for a provided action
+description: higher-order workflow that allows retries for a provided action
 
 input:
   - action
+  - action_inputs: null
   - max_retries
 
 vars:
   - retries: 0
+  - failed: true
 
 tasks:
-  call_action:
-    # action: <% ctx().action %>
-    action: core.noop
-    next:
-      - when: <% succeeded() %>
-        do: try_again
-      # - when: <% succeeded() %>
-      #   do: finish
-      # - when: <% failed() and ctx().retries < ctx().max_retries %>
-      #   publish:
-      #     # - retries: <% ctx().retries + 1 %>
-      #     - retries: 3
-      #   do: try_again
-      # - when: <% failed() and ctx().retries >= ctx().max_retries %>
-      #   do: stop
-
-  try_again:
+  # must have an entry that isn't involved in the loop
+  entry:
     action: core.noop
     next:
       - when: <% succeeded() %>
         do: call_action
 
-  # finish:
-  #   action: core.echo message="Retry succeeded"
+  call_action:
+    action: <% ctx().action %>
+    input: <% ctx().action_inputs %>
+    next:
+      # todo: use succeeded() - ctx().failed is just for demo purposes
+      - when: <% not ctx().failed %>
+        do: finish
+      # todo: use failed() - ctx().failed is just for demo purposes
+      - when: <% ctx().failed %>
+        do: try_again
 
-  # stop:
-  #   action: core.echo message="Exceeded retries"
-  #   next:
-  #     - do: fail
+  try_again:
+    action: core.noop
+    next:
+      # if we haven't tried max times
+      - when: <% ctx().retries < ctx().max_retries %>
+        publish:
+          - retries: <% ctx().retries + 1 %>
+        do: call_action
+
+      # if we have tried max times
+      - when: <% ctx().failed and ctx().retries >= ctx().max_retries %>
+        do: stop
+
+      # hardcoded success at 3 tries
+      - when: <% ctx().retries = 3 %>
+        publish:
+          - failed: false
+
+  finish:
+    action: core.echo message="Retry succeeded"
+
+  stop:
+    action: core.echo message="Exceeded retries"
+    next:
+      - do: fail
