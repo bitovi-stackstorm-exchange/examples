@@ -15,7 +15,7 @@ start:
 task1:
   action: core.noop
   next:
-    - when: '<% ctx("loop") = true %>'
+    - when: <% ctx("loop") = true %>
       publish:
         - loop: False
       do: task1
