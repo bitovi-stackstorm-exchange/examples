@@ -1,0 +1,6 @@
+---
+name: orquesta-retry-test
+description: test orquesta retry
+runner_type: orquesta
+entry_point: workflows/orquesta-retry-test.yaml
+enabled: true

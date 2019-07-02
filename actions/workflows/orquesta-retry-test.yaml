@@ -1,0 +1,18 @@
+## this action just hangs
+
+version: 1.0
+
+description: retry
+
+tasks:
+  party:
+    action: core.noop
+    next:
+      - when: <% succeeded() %>
+        do: partb
+
+  partb:
+    action: core.noop
+    next:
+      - when: <% succeeded() %>
+        do: party
