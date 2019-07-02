@@ -13,17 +13,20 @@ vars:
 
 tasks:
   call_action:
-    action: <% ctx().action %>
+    # action: <% ctx().action %>
+    action: core.noop
     next:
       - when: <% succeeded() %>
-        do: finish
-      - when: <% failed() and ctx().retries < ctx().max_retries %>
-        publish:
-          # - retries: <% ctx().retries + 1 %>
-          - retries: 3
         do: try_again
-      - when: <% failed() and ctx().retries >= ctx().max_retries %>
-        do: stop
+      # - when: <% succeeded() %>
+      #   do: finish
+      # - when: <% failed() and ctx().retries < ctx().max_retries %>
+      #   publish:
+      #     # - retries: <% ctx().retries + 1 %>
+      #     - retries: 3
+      #   do: try_again
+      # - when: <% failed() and ctx().retries >= ctx().max_retries %>
+      #   do: stop
 
   try_again:
     action: core.noop
@@ -31,10 +34,10 @@ tasks:
       - when: <% succeeded() %>
         do: call_action
 
-  finish:
-    action: core.echo message="Retry succeeded"
+  # finish:
+  #   action: core.echo message="Retry succeeded"
 
-  stop:
-    action: core.echo message="Exceeded retries"
-    next:
-      - do: fail
+  # stop:
+  #   action: core.echo message="Exceeded retries"
+  #   next:
+  #     - do: fail
