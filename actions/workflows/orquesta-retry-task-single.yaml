@@ -33,7 +33,7 @@ tasks:
         do: try_again
 
   try_again:
-    action: core.echo message="try again - retries=<% ctx().retries() %>"
+    action: core.echo message="try again - retries=<% ctx().retries %>"
     next:
       # if we haven't tried max times
       - when: <% ctx().retries < ctx().max_retries %>
