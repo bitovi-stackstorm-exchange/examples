@@ -26,7 +26,7 @@ tasks:
     input: <% ctx().action_inputs %>
     next:
       # todo: use succeeded() - ctx().failed is just for demo purposes
-      - when: <% not ctx().failed %>
+      - when: <% ctx().failed = false %>
         do: finish
       # todo: use failed() - ctx().failed is just for demo purposes
       - when: <% ctx().failed %>
