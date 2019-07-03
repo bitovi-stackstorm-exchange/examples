@@ -46,7 +46,7 @@ tasks:
         do: stop
 
       # hardcoded success at 3 tries
-      - when: <% ctx().retries = 3 %>
+      - when: <% ctx().retries = 2 %>
         publish:
           - failed: false
 
